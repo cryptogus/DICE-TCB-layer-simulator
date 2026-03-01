@@ -5,8 +5,7 @@
 
 namespace sodium_crypto
 {
-class sha256 {
-public:
+struct sha256 {
     sha256(const void *input, size_t input_len)
     {        crypto_hash_sha256(hash, (uint8_t*)input, input_len);
     };

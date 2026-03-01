@@ -6,7 +6,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(SODIUM REQUIRED libsodium)
 find_package(GTest REQUIRED)
 
-add_executable(sha256_test sha256.cpp)
+add_executable(sha256_test sha256_test.cpp)
 target_include_directories(sha256_test PRIVATE ${SODIUM_INCLUDE_DIRS} ..)
 target_link_libraries(sha256_test PRIVATE ${SODIUM_LIBRARIES} GTest::gtest_main)
 

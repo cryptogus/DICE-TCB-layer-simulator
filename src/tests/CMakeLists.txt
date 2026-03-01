@@ -15,6 +15,11 @@ target_include_directories(uds_gen_test PRIVATE ${SODIUM_INCLUDE_DIRS} ..)
 target_link_libraries(uds_gen_test PRIVATE ${SODIUM_LIBRARIES} GTest::gtest_main)
 
 
+add_executable(hmac_sha256_test hmac_sha256_test.cpp)
+target_include_directories(hmac_sha256_test PRIVATE ${SODIUM_INCLUDE_DIRS} ..)
+target_link_libraries(hmac_sha256_test PRIVATE ${SODIUM_LIBRARIES} GTest::gtest_main)
+
 include(GoogleTest)
 gtest_discover_tests(sha256_test)
 gtest_discover_tests(uds_gen_test)
+gtest_discover_tests(hmac_sha256_test)

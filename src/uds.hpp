@@ -1,12 +1,12 @@
 #pragma once
 
 #include <cstdint>
-#include <sys/random.h>
+#include <sodium.h>
 
 class uds {
 public:
     uds() {
-        getrandom(uds_seed, sizeof(uds_seed), 0);  // 0 = /dev/urandom
+        randombytes_buf(uds_seed, sizeof(uds_seed));
     }
 private:
     uint32_t uds_seed[8];

@@ -14,5 +14,6 @@ TEST(UDSTest, GenerateSeed) {
         EXPECT_NE(my_uds.uds_seed[i], 0);
     }
     // sodium_memzero는 컴파일러가 절대 최적화로 제거하지 못하도록 보장된 제로화 함수
+    // 비밀값이 메모리에 그대로 남아서, 메모리 덤프나 cold boot 공격 같은 걸로 유출될 수 있음
     sodium_memzero(reinterpret_cast<void*>(my_uds.uds_seed), sizeof(my_uds.uds_seed));
 }

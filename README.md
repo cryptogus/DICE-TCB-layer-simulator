@@ -5,4 +5,5 @@ Ubuntu 22.04 LTS
 ```bash
 $ sudo apt install libsodium-dev
 $ pkg-config --modversion libsodium
+$ sudo apt install libgtest-dev
 ```

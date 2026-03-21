@@ -10,7 +10,11 @@ add_library(dice_crypto INTERFACE)
 target_include_directories(dice_crypto INTERFACE ${SODIUM_INCLUDE_DIRS} ..)
 target_link_libraries(dice_crypto INTERFACE ${SODIUM_LIBRARIES})
 
-set(TESTS sha256_test uds_gen_test hmac_sha256_test hkdf_test ed25519_test)
+set(TESTS
+    sha256_test uds_gen_test hmac_sha256_test hkdf_test ed25519_test
+    secure_buf_test dice_engine_test simple_cert_test
+    dice_layer_test chain_verifier_test dice_integration_test
+)
 
 foreach(test ${TESTS})
     add_executable(${test} ${test}.cpp)

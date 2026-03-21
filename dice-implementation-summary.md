@@ -73,12 +73,50 @@ DeviceID Cert  ← 자체 서명 (또는 제조사 Root CA 서명)
 - `CDI = HMAC(UDS, Hash(fw))` 계산
 - UDS 제로화
 - 테스트: 같은 입력 → 같은 CDI, 다른 입력 → 다른 CDI
-
+```
+UDS (Unique Device Secret)
+        │
+        ▼
+   ┌─────────┐
+   │ Extract  │  PRK = HMAC-SHA256(salt, UDS || FW_hash)
+   └────┬────┘
+        │ PRK
+        ▼
+   ┌─────────┐
+   │ Expand   │  info="identity" → DeviceID 키
+   │          │  info="attestation" → Attestation 키
+   └─────────┘
+```
 ### 3단계: 멀티 레이어 체이닝
 - 3~4개 레이어로 CDI 체이닝
 - 각 레이어에서 이전 CDI 제로화
 - DiceLayer 클래스로 추상화: 입력(이전 CDI + fw) → 출력(현재 CDI)
-
+```
+┌─────────────────────────────────────────────┐
+│                 DICE Layer 0                 │
+│                                             │
+│  UDS ─┬── FW Hash ──┐                      │
+│       │              │                      │
+│       ▼              ▼                      │
+│   ┌──────────────────────┐                  │
+│   │  Extract             │                  │
+│   │  PRK = HMAC(UDS,     │                  │
+│   │        FW_hash)      │                  │
+│   └──────────┬───────────┘                  │
+│              │                              │
+│      ┌───────┴───────┐                      │
+│      ▼               ▼                      │
+│  ┌────────┐    ┌──────────┐                 │
+│  │ Expand │    │ Expand   │                 │
+│  │info=   │    │info=     │                 │
+│  │"cdi_id"│    │"cdi_attest"                │
+│  └───┬────┘    └────┬─────┘                 │
+│      │              │                       │
+│      ▼              ▼                       │
+│   CDI_ID      CDI_Attest                    │
+│  (신원증명)    (원격증명)                     │
+└─────────────────────────────────────────────┘
+```
 ### 4단계: CDI → 키 유도
 - HKDF-Extract(salt=zero, ikm=CDI) → PRK
 - HKDF-Expand(PRK, "DEVICEID_KEY") → DeviceID seed → keypair

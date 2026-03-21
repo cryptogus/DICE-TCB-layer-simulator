@@ -34,7 +34,7 @@ struct hkdf_sha256 {
                        std::span<const uint8_t> info,
                        const uint8_t (&prk)[HASH_LEN])
     {
-        uint8_t t[HASH_LEN] = {};
+        uint8_t t[HASH_LEN] = {}; // T(i-1)
         size_t offset = 0;
         uint8_t counter = 1;
 

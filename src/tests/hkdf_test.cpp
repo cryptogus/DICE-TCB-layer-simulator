@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "hkdf.hpp"
 #include <cstring>
+#include "hkdf.hpp"
 
 // RFC 5869 - Test Case 1
 TEST(HKDF_SHA256, RFC5869_TestCase1)

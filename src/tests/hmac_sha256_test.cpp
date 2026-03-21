@@ -1,23 +1,23 @@
 #include <gtest/gtest.h>
-#include "hmac_sha256.hpp"
 #include <cstring>
+#include "hmac_sha256.hpp"
 
-TEST(HMAC_SHA256, TestVectors)
+// RFC 4231 - Test Case 1
+TEST(HMAC_SHA256, RFC4231_TestCase1)
 {
-    // Test vector from RFC 4231 - Test Case 1
-    // Key: 20 bytes of 0x0b, zero-padded to 32 bytes for libsodium
     const uint8_t key[crypto_auth_hmacsha256_KEYBYTES] = {
         0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b,
         0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b,
         0x0b, 0x0b, 0x0b, 0x0b
     };
     const char msg[] = "Hi There";
-    const uint8_t expected_mac[crypto_auth_hmacsha256_BYTES] = {
+    const uint8_t expected[crypto_auth_hmacsha256_BYTES] = {
         0xb0, 0x34, 0x4c, 0x61, 0xd8, 0xdb, 0x38, 0x53,
         0x5c, 0xa8, 0xaf, 0xce, 0xaf, 0x0b, 0xf1, 0x2b,
         0x88, 0x1d, 0xc2, 0x00, 0xc9, 0x83, 0x3d, 0xa7,
         0x26, 0xe9, 0x37, 0x6c, 0x2e, 0x32, 0xcf, 0xf7
     };
+
     sodium_crypto::hmac_sha256 hmac(msg, strlen(msg), key);
-    EXPECT_EQ(memcmp(hmac.mac, expected_mac, crypto_auth_hmacsha256_BYTES), 0);
+    EXPECT_EQ(memcmp(hmac.mac, expected, crypto_auth_hmacsha256_BYTES), 0);
 }

@@ -6,4 +6,5 @@ cd build && make -j$(nproc)
 ./uds_gen_test
 ./hmac_sha256_test
 ./hkdf_test
+./ed25519_test
 cd .. && rm -rf build

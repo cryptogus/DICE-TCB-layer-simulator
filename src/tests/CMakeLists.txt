@@ -23,8 +23,13 @@ add_executable(hkdf_test hkdf_test.cpp)
 target_include_directories(hkdf_test PRIVATE ${SODIUM_INCLUDE_DIRS} ..)
 target_link_libraries(hkdf_test PRIVATE ${SODIUM_LIBRARIES} GTest::gtest_main)
 
+add_executable(ed25519_test ed25519_test.cpp)
+target_include_directories(ed25519_test PRIVATE ${SODIUM_INCLUDE_DIRS} ..)
+target_link_libraries(ed25519_test PRIVATE ${SODIUM_LIBRARIES} GTest::gtest_main)
+
 include(GoogleTest)
 gtest_discover_tests(sha256_test)
 gtest_discover_tests(uds_gen_test)
 gtest_discover_tests(hmac_sha256_test)
 gtest_discover_tests(hkdf_test)
+gtest_discover_tests(ed25519_test)

@@ -9,3 +9,6 @@ pkg_check_modules(SODIUM REQUIRED libsodium)
 add_library(dice_crypto INTERFACE)
 target_include_directories(dice_crypto INTERFACE ${SODIUM_INCLUDE_DIRS} src/)
 target_link_libraries(dice_crypto INTERFACE ${SODIUM_LIBRARIES})
+
+add_executable(dice_demo src/main.cpp)
+target_link_libraries(dice_demo PRIVATE dice_crypto)

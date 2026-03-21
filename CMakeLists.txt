@@ -4,3 +4,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SODIUM REQUIRED libsodium)
+
+# Header-only INTERFACE library
+add_library(dice_crypto INTERFACE)
+target_include_directories(dice_crypto INTERFACE ${SODIUM_INCLUDE_DIRS} src/)
+target_link_libraries(dice_crypto INTERFACE ${SODIUM_LIBRARIES})

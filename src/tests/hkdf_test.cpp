@@ -35,11 +35,11 @@ TEST(HKDF_SHA256, RFC5869_TestCase1)
     };
 
     uint8_t prk[32];
-    sodium_crypto::hkdf_sha256::extract(prk, ikm, sizeof(ikm), salt, sizeof(salt));
+    sodium_crypto::hkdf_sha256::extract(prk, ikm, salt);
     EXPECT_EQ(memcmp(prk, expected_prk, 32), 0);
 
     uint8_t okm[42];
-    sodium_crypto::hkdf_sha256::expand(okm, sizeof(okm), info, sizeof(info), prk);
+    sodium_crypto::hkdf_sha256::expand(okm, info, prk);
     EXPECT_EQ(memcmp(okm, expected_okm, 42), 0);
 }
 
@@ -98,10 +98,10 @@ TEST(HKDF_SHA256, RFC5869_TestCase2)
     };
 
     uint8_t prk[32];
-    sodium_crypto::hkdf_sha256::extract(prk, ikm, sizeof(ikm), salt, sizeof(salt));
+    sodium_crypto::hkdf_sha256::extract(prk, ikm, salt);
 
     uint8_t okm[82];
-    sodium_crypto::hkdf_sha256::expand(okm, sizeof(okm), info, sizeof(info), prk);
+    sodium_crypto::hkdf_sha256::expand(okm, info, prk);
     EXPECT_EQ(memcmp(okm, expected_okm, 82), 0);
 }
 
@@ -130,10 +130,10 @@ TEST(HKDF_SHA256, RFC5869_TestCase3)
     };
 
     uint8_t prk[32];
-    sodium_crypto::hkdf_sha256::extract(prk, ikm, sizeof(ikm));
+    sodium_crypto::hkdf_sha256::extract(prk, ikm);
     EXPECT_EQ(memcmp(prk, expected_prk, 32), 0);
 
     uint8_t okm[42];
-    sodium_crypto::hkdf_sha256::expand(okm, sizeof(okm), nullptr, 0, prk);
+    sodium_crypto::hkdf_sha256::expand(okm, {}, prk);
     EXPECT_EQ(memcmp(okm, expected_okm, 42), 0);
 }
